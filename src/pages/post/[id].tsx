@@ -22,22 +22,22 @@ function PostItem(props: { post: PostByIdOutput }) {
 
 const PostViewPage: NextPageWithLayout = () => {
   const id = useRouter().query.id as string;
-  const postQuery = trpc.post.byId.useQuery({ id });
+  // const postQuery = trpc.post.byId.useQuery({ id });
+  return <></>;
+  // if (postQuery.error) {
+  //   return (
+  //     <NextError
+  //       title={postQuery.error.message}
+  //       statusCode={postQuery.error.data?.httpStatus ?? 500}
+  //     />
+  //   );
+  // }
 
-  if (postQuery.error) {
-    return (
-      <NextError
-        title={postQuery.error.message}
-        statusCode={postQuery.error.data?.httpStatus ?? 500}
-      />
-    );
-  }
-
-  if (postQuery.status !== 'success') {
-    return <>Loading...</>;
-  }
-  const { data } = postQuery;
-  return <PostItem post={data} />;
+  // if (postQuery.status !== 'success') {
+  //   return <>Loading...</>;
+  // }
+  // const { data } = postQuery;
+  // return <PostItem post={data} />;
 };
 
 export default PostViewPage;

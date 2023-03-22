@@ -3,27 +3,27 @@ import { NextPageWithLayout } from './_app';
 import { inferProcedureInput } from '@trpc/server';
 import Link from 'next/link';
 import { Fragment } from 'react';
-import type { AppRouter } from '~/server/routers/_app';
+import { AppRouter } from '@pharmalife/api';
 
 const IndexPage: NextPageWithLayout = () => {
-  const utils = trpc.useContext();
-  const postsQuery = trpc.post.list.useInfiniteQuery(
-    {
-      limit: 5,
-    },
-    {
-      getPreviousPageParam(lastPage) {
-        return lastPage.nextCursor;
-      },
-    },
-  );
+  // const utils = trpc.useContext();
+  // const postsQuery = trpc.post.list.useInfiniteQuery(
+  //   {
+  //     limit: 5,
+  //   },
+  //   {
+  //     getPreviousPageParam(lastPage) {
+  //       return lastPage.nextCursor;
+  //     },
+  //   },
+  // );
 
-  const addPost = trpc.post.add.useMutation({
-    async onSuccess() {
-      // refetches posts after a post is added
-      await utils.post.list.invalidate();
-    },
-  });
+  // const addPost = trpc.post.add.useMutation({
+  // async onSuccess() {
+  // refetches posts after a post is added
+  // await utils.post.list.invalidate();
+  // },
+  // });
 
   // prefetch all posts for instant navigation
   // useEffect(() => {
@@ -46,7 +46,7 @@ const IndexPage: NextPageWithLayout = () => {
         .
       </p>
 
-      <h2>
+      {/* <h2>
         Latest Posts
         {postsQuery.status === 'loading' && '(loading)'}
       </h2>
@@ -73,7 +73,7 @@ const IndexPage: NextPageWithLayout = () => {
             </article>
           ))}
         </Fragment>
-      ))}
+      ))} */}
 
       <hr />
 
@@ -90,14 +90,14 @@ const IndexPage: NextPageWithLayout = () => {
           e.preventDefault();
           const $form = e.currentTarget;
           const values = Object.fromEntries(new FormData($form));
-          type Input = inferProcedureInput<AppRouter['post']['add']>;
-          //    ^?
-          const input: Input = {
-            title: values.title as string,
-            text: values.text as string,
-          };
+          // type Input = inferProcedureInput<AppRouter>;
+          // //    ^?
+          // const input: Input = {
+          //   title: values.title as string,
+          //   text: values.text as string,
+          // };
           try {
-            await addPost.mutateAsync(input);
+            // await addPost.mutateAsync(input);
 
             $form.reset();
           } catch (cause) {
@@ -111,18 +111,18 @@ const IndexPage: NextPageWithLayout = () => {
           id="title"
           name="title"
           type="text"
-          disabled={addPost.isLoading}
+          // disabled={addPost.isLoading}
         />
 
         <br />
         <label htmlFor="text">Text:</label>
         <br />
-        <textarea id="text" name="text" disabled={addPost.isLoading} />
+        {/* <textarea id="text" name="text" disabled={addPost.isLoading} />
         <br />
         <input type="submit" disabled={addPost.isLoading} />
         {addPost.error && (
           <p style={{ color: 'red' }}>{addPost.error.message}</p>
-        )}
+        )} */}
       </form>
     </>
   );
